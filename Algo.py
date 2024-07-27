@@ -4,6 +4,7 @@ def StartGame():
     Population = Create_Population(40)
     for pop in Population:
         Fitness(pop)
+    Crossover(Population)
 
 ##Algorithms
 ##=================================================================
@@ -20,14 +21,53 @@ def Fitness(board):
     Points = 0
     i = 0
     for row in board:
-        if i >= 8:
+        if i >= 7:
             break
         for p in row:
-            Points  += p
+            if p != -1:
+                Points  += p
         i += 1
-    Points *= -1
-    board[7] = Points
+    board[8] = Points
     return board
+
+def Crossover(Population):
+    NewPopulation = []
+    BestFitness = []
+    ForCorssing = []
+    ForMutation = []
+    MaxFit = 1000
+    WorstFit = 0
+
+    ##Search the Board with highest fitness
+    for pop in Population:
+        if pop[8] < MaxFit:
+            MaxFit = pop[8]
+            M = pop
+    NewPopulation.append[M]
+    ForCorssing.append[M]
+
+    ##Sort out the Boards with lowest finess
+    for pop in Population:
+        if pop[8] > WorstFit:
+            WorstFit = pop[8]
+    for pop in Population:
+        if pop[8] > WorstFit:
+            ForCorssing.append[pop]
+    
+    ##Corss the diffrent boards
+    for pop in ForCorssing:
+        NewBoard = []
+        OtherBoard = ForCrossing[random.randint(0, ForCorssing.count)]
+        i = pop[7].count / 2
+        for n in i:
+            NewBoard.append[pop[n]]
+        i = OtherBoard[7].count / 2
+        for n in i:
+            NewBoard.append[OtherBoard[i + n]]
+        NewPopulation.append[NewBoard]
+    
+    ##Mutation
+    return NewPopulation
 
 
 
@@ -58,6 +98,7 @@ def PlayGame():
             board[move[1][0]][move[1][1]] = 0
             board[move[2][0]][move[2][1]] = 0
         counts = counts + 1
+    board.append(MovesUsed)
     board.append([])
     return board
 
