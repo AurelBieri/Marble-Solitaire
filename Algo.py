@@ -1,4 +1,5 @@
 import random
+from operator import itemgetter
 
 def StartGame():
     Population = Create_Population(40)
@@ -32,39 +33,46 @@ def Fitness(board):
 
 def Crossover(Population):
     NewPopulation = []
+    SortedPopulation = []
     BestFitness = []
     ForCorssing = []
     ForMutation = []
     MaxFit = 1000
     WorstFit = 0
 
+    SortedPopulation = sorted(Population, key=itemgetter(8))
+
+    ##NewPopulation.append(SortedPopulation[0])
     ##Search the Board with highest fitness
     for pop in Population:
         if pop[8] < MaxFit:
             MaxFit = pop[8]
             M = pop
-    NewPopulation.append[M]
-    ForCorssing.append[M]
+    NewPopulation.append(M)
 
-    ##Sort out the Boards with lowest finess
-    for pop in Population:
-        if pop[8] > WorstFit:
-            WorstFit = pop[8]
-    for pop in Population:
-        if pop[8] > WorstFit:
-            ForCorssing.append[pop]
-    
+    i = 0
+    ##Sort out the Boards with lowest fitness   
+    for pop in SortedPopulation:
+        if i <= (len(SortedPopulation) - 3):
+            ForCorssing.append(pop)
+            i = i + 1
+
     ##Corss the diffrent boards
     for pop in ForCorssing:
         NewBoard = []
-        OtherBoard = ForCrossing[random.randint(0, ForCorssing.count)]
-        i = pop[7].count / 2
-        for n in i:
-            NewBoard.append[pop[n]]
-        i = OtherBoard[7].count / 2
-        for n in i:
-            NewBoard.append[OtherBoard[i + n]]
-        NewPopulation.append[NewBoard]
+        rand = random.randint(0, len(ForCorssing))
+        OtherBoard = ForCorssing[rand]
+        i = len(pop[7]) 
+        count = 0
+
+        while count < i and count < len(OtherBoard[7]):
+            if (count % 2) == 0:
+                NewBoard.append(pop[7][count])
+            else:
+                NewBoard.append(OtherBoard[7][count])
+            count += 1
+
+        NewPopulation.append(NewBoard)
     
     ##Mutation
     return NewPopulation
